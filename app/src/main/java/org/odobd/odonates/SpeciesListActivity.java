@@ -11,6 +11,8 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.odobd.odonates.model.Species;
+
 public class SpeciesListActivity extends AppCompatActivity {
 
     DatabaseReference mDatabase;
@@ -22,7 +24,7 @@ public class SpeciesListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_species_list);
 
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("string");
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("speciesdata");
 
         mRecyclerView = (RecyclerView) findViewById(R.id.species_reclycler);
         mRecyclerView.setHasFixedSize(true);
@@ -34,15 +36,15 @@ public class SpeciesListActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        FirebaseRecyclerAdapter<String, SpeciesViewHolder> adapter =
-                new FirebaseRecyclerAdapter<String, SpeciesViewHolder>(
-                        String.class,
+        FirebaseRecyclerAdapter<Species, SpeciesViewHolder> adapter =
+                new FirebaseRecyclerAdapter<Species, SpeciesViewHolder>(
+                        Species.class,
                         android.R.layout.two_line_list_item,
                         SpeciesViewHolder.class,
                         mDatabase) {
                     @Override
-                    protected void populateViewHolder(SpeciesViewHolder viewHolder, String model, int position) {
-                        viewHolder.mText.setText("dfkapew");
+                    protected void populateViewHolder(SpeciesViewHolder viewHolder, Species model, int position) {
+                        viewHolder.mText.setText(new StringBuilder().append(model.getGenus()).append(" ").append(model.getSpecificname()).toString());
                     }
                 };
 
