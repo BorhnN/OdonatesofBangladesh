@@ -1,12 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingTop="8dp">
 
     <TextView
         android:id="@+id/species_name_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView"/>
-</LinearLayout>
+        android:text="TextView"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:textStyle="normal|italic"/>
+
+    <TextView
+        android:id="@+id/family_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/species_name_view"
+        android:text="TextView"
+        />
+
+    <TextView
+        android:id="@+id/iucn_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/family_text"
+        android:text="TextView"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.SearchResult.Subtitle"/>
+
+    <ImageView
+        android:id="@+id/species_photo"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"/>
+
+</RelativeLayout>

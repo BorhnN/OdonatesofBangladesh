@@ -39,12 +39,15 @@ public class SpeciesListActivity extends AppCompatActivity {
         FirebaseRecyclerAdapter<Species, SpeciesViewHolder> adapter =
                 new FirebaseRecyclerAdapter<Species, SpeciesViewHolder>(
                         Species.class,
-                        android.R.layout.two_line_list_item,
+                        R.layout.species_view,
                         SpeciesViewHolder.class,
                         mDatabase) {
                     @Override
                     protected void populateViewHolder(SpeciesViewHolder viewHolder, Species model, int position) {
-                        viewHolder.mText.setText(new StringBuilder().append(model.getGenus()).append(" ").append(model.getSpecificname()).toString());
+                        viewHolder.mSpeciesName.setText(new StringBuilder().append(model.getGenus()).append(" ").append(model.getSpecificname()).toString());
+                        viewHolder.mFamilyName.setText(model.getFamily());
+                        viewHolder.mIUCNstatus.setText("IUCN status" + ": " + model.getIUCN_status());
+
                     }
                 };
 
@@ -53,11 +56,15 @@ public class SpeciesListActivity extends AppCompatActivity {
 
     public static class SpeciesViewHolder
             extends RecyclerView.ViewHolder {
-        TextView mText;
+        TextView mSpeciesName;
+        TextView mFamilyName;
+        TextView mIUCNstatus;
 
         public SpeciesViewHolder(View v) {
             super(v);
-            mText = (TextView) v.findViewById(android.R.id.text1);
+            mSpeciesName = (TextView) v.findViewById(R.id.species_name_view);
+            mFamilyName = (TextView) v.findViewById(R.id.family_text);
+            mIUCNstatus = (TextView) v.findViewById(R.id.iucn_status);
         }
     }
 }
