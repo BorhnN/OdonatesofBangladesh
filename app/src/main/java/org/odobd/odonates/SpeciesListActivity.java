@@ -6,18 +6,25 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.odobd.odonates.model.Species;
+
+import java.util.ArrayList;
 
 public class SpeciesListActivity extends AppCompatActivity {
 
     DatabaseReference mDatabase;
 
     RecyclerView mRecyclerView;
+    SpeciesRecyclerAdapter adapter;
+    ArrayList<Species> specieslist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,9 +33,7 @@ public class SpeciesListActivity extends AppCompatActivity {
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("speciesdata");
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.species_reclycler);
-        mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
 
     }
 
@@ -36,7 +41,7 @@ public class SpeciesListActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        FirebaseRecyclerAdapter<Species, SpeciesViewHolder> adapter =
+/*        FirebaseRecyclerAdapter<Species, SpeciesViewHolder> adapter =
                 new FirebaseRecyclerAdapter<Species, SpeciesViewHolder>(
                         Species.class,
                         R.layout.species_view,
@@ -49,9 +54,30 @@ public class SpeciesListActivity extends AppCompatActivity {
                         viewHolder.mIUCNstatus.setText("IUCN status" + ": " + model.getIUCN_status());
 
                     }
-                };
 
-        mRecyclerView.setAdapter(adapter);
+                };*/
+
+        specieslist = new ArrayList<Species>();
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("speciesdata");
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot speciesSnapshot : dataSnapshot.getChildren()) {
+                    specieslist.add(speciesSnapshot.getValue(Species.class));
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        mRecyclerView = (RecyclerView) findViewById(R.id.species_reclycler);
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(SpeciesListActivity.this));
+        mRecyclerView.setAdapter(new SpeciesRecyclerAdapter(SpeciesListActivity.this, specieslist));
     }
 
     public static class SpeciesViewHolder
