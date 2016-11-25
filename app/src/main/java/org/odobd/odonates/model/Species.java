@@ -6,8 +6,7 @@ package org.odobd.odonates.model;
 
 public class Species {
     private String suborder,
-            family,
-            genus,
+            family, genus,
             specificname,
             scientist,
             year,
