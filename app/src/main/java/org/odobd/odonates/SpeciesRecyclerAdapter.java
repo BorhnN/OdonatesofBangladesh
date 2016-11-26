@@ -1,6 +1,7 @@
 package org.odobd.odonates;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -67,8 +68,16 @@ public class SpeciesRecyclerAdapter extends RecyclerView.Adapter<SpeciesRecycler
 
     @Override
     public void onBindViewHolder(SpeciesViewHolder holder, int position) {
-        holder.mFamilyName.setText(mAllSpecies.get(position).getFamily());
-        holder.mSpeciesName.setText(mAllSpecies.get(position).getSpecificname());
+        Resources res = mContext.getResources();
+        Species currentSpecies = mAllSpecies.get(position);
+        holder.mCommonName.setText(currentSpecies.getCommonname());
+        holder.mSpeciesName.setText(
+                String.format(res.getString(R.string.scientific_name_format),
+                        currentSpecies.getGenus(),
+                        currentSpecies.getSpecificname()));
+        holder.mIUCNstatus.setText(
+                String.format(res.getString(R.string.IUCN_field_on_species_list_act),
+                        currentSpecies.getIUCN_status()));
     }
 
     @Override
@@ -78,13 +87,13 @@ public class SpeciesRecyclerAdapter extends RecyclerView.Adapter<SpeciesRecycler
 
     public class SpeciesViewHolder extends RecyclerView.ViewHolder {
         TextView mSpeciesName;
-        TextView mFamilyName;
+        TextView mCommonName;
         TextView mIUCNstatus;
 
         public SpeciesViewHolder(View itemView) {
             super(itemView);
             mSpeciesName = (TextView) itemView.findViewById(R.id.species_name_view);
-            mFamilyName = (TextView) itemView.findViewById(R.id.family_text);
+            mCommonName = (TextView) itemView.findViewById(R.id.common_name);
             mIUCNstatus = (TextView) itemView.findViewById(R.id.iucn_status);
         }
     }

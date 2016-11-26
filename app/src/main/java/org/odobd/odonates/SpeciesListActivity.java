@@ -45,7 +45,7 @@ public class SpeciesListActivity extends AppCompatActivity {
         public SpeciesViewHolder(View v) {
             super(v);
             mSpeciesName = (TextView) v.findViewById(R.id.species_name_view);
-            mFamilyName = (TextView) v.findViewById(R.id.family_text);
+            mFamilyName = (TextView) v.findViewById(R.id.common_name);
             mIUCNstatus = (TextView) v.findViewById(R.id.iucn_status);
         }
     }

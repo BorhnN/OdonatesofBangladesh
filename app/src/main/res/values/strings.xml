@@ -7,4 +7,6 @@
     <string name="action_settings">Settings</string>
     <string name="welcome_text">Welcome to OdoBD</string>
     <string name="cover_photo_description">Image of an Damselfly. Used as a cover photo</string>
+    <string name="IUCN_field_on_species_list_act">IUCN : %1$s</string>
+    <string name="scientific_name_format">%1$s %2$s</string>
 </resources>
